@@ -8,19 +8,18 @@
         Title="Визуализация дека (двусвязный список)"
         Height="600" Width="1000" MinHeight="400" MinWidth="700">
 
-    <!-- Каркас окна: пять логических областей, разделённых строками Grid.
-         ShowGridLines включён на время отладки компоновки. -->
+
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>               <!-- 1. меню -->
-            <RowDefinition Height="Auto"/>               <!-- 2. панель операций -->
-            <RowDefinition Height="3*" MinHeight="150"/> <!-- 3. визуализация дека -->
-            <RowDefinition Height="Auto"/>               <!-- разделитель -->
-            <RowDefinition Height="*"  MinHeight="80"/>  <!-- 4. журнал событий -->
-            <RowDefinition Height="Auto"/>               <!-- 5. строка состояния -->
+            <RowDefinition Height="Auto"/> 
+            <RowDefinition Height="Auto"/> 
+            <RowDefinition Height="3*" MinHeight="150"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"  MinHeight="80"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- 1. Меню -->
+
         <Menu Grid.Row="0">
             <MenuItem Header="Файл">
                 <MenuItem Header="Сохранить..."/>
@@ -31,8 +30,7 @@
             </MenuItem>
         </Menu>
 
-        <!-- 2. Панель операций: поле ввода прижато влево,
-             кнопки занимают оставшееся место и переносятся при сужении окна -->
+
         <DockPanel Grid.Row="1" Margin="5" LastChildFill="True">
             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
                 <Label Content="Значение:" VerticalAlignment="Center"/>
@@ -47,9 +45,6 @@
             </WrapPanel>
         </DockPanel>
 
-        <!-- 3. Область визуализации дека.
-             Canvas — поверхность рисования узлов и связей, прокрутка вынесена
-             в ScrollViewer, так как контейнеры компоновки её не поддерживают -->
         <ScrollViewer Grid.Row="2" Margin="5"
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
@@ -57,17 +52,14 @@
                     MinWidth="400" MinHeight="120"/>
         </ScrollViewer>
 
-        <!-- Разделитель между областью визуализации и журналом -->
         <GridSplitter Grid.Row="3" Height="4"
                       HorizontalAlignment="Stretch" VerticalAlignment="Center"
                       ShowsPreview="False"/>
 
-        <!-- 4. Журнал событий -->
         <ScrollViewer Grid.Row="4" Margin="5" VerticalScrollBarVisibility="Auto">
             <ItemsControl x:Name="listLog"/>
         </ScrollViewer>
 
-        <!-- 5. Строка состояния: счётчик слева, указатели справа -->
         <Grid Grid.Row="5" Margin="5,2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
