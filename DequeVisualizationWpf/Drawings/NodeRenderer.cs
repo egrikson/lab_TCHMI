@@ -29,6 +29,7 @@ public class NodeRenderer
 
         var pointerBox = new Border
         {
+            Background = (Brush)Application.Current.FindResource("PointerBrush"),
             BorderBrush = (Brush)Application.Current.FindResource("NodeBorderBrush"),
             BorderThickness = new Thickness(1, 0, 0, 0),
             Child = new TextBlock
@@ -46,11 +47,7 @@ public class NodeRenderer
 
         return new Border
         {
-            Width = NodeWidth,
-            Height = NodeHeight,
-            Background = (Brush)Application.Current.FindResource("NodeBrush"),
-            BorderBrush = (Brush)Application.Current.FindResource("NodeBorderBrush"),
-            BorderThickness = new Thickness(1),
+            Style = (Style)Application.Current.FindResource("NodeStyle"),
             Child = grid
         };
     }

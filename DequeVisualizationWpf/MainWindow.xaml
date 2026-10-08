@@ -29,6 +29,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="3*" MinHeight="150"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"  MinHeight="80"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -52,21 +53,13 @@
                          VerticalContentAlignment="Center"/>
             </StackPanel>
             <WrapPanel>
-                <Button Margin="{StaticResource ElementMargin}"
-                        Padding="{StaticResource ButtonPadding}"
-                        Command="{x:Static local:DequeCommands.AddFirst}"
+                <Button Command="{x:Static local:DequeCommands.AddFirst}"
                         Content="Добавить в начало"/>
-                <Button Margin="{StaticResource ElementMargin}"
-                        Padding="{StaticResource ButtonPadding}"
-                        Command="{x:Static local:DequeCommands.AddLast}"
+                <Button Command="{x:Static local:DequeCommands.AddLast}"
                         Content="Добавить в конец"/>
-                <Button Margin="{StaticResource ElementMargin}"
-                        Padding="{StaticResource ButtonPadding}"
-                        Command="{x:Static local:DequeCommands.RemoveFirst}"
+                <Button Command="{x:Static local:DequeCommands.RemoveFirst}"
                         Content="Удалить из начала"/>
-                <Button Margin="{StaticResource ElementMargin}"
-                        Padding="{StaticResource ButtonPadding}"
-                        Command="{x:Static local:DequeCommands.RemoveLast}"
+                <Button Command="{x:Static local:DequeCommands.RemoveLast}"
                         Content="Удалить с конца"/>
             </WrapPanel>
         </DockPanel>
@@ -81,22 +74,46 @@
                     MinWidth="400" MinHeight="120"/>
         </ScrollViewer>
 
-        <GridSplitter Grid.Row="3" Height="4"
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10,0,10,4">
+            <Rectangle Width="18" Height="12"
+                       Fill="{StaticResource NodeBrush}"
+                       Stroke="{StaticResource NodeBorderBrush}"
+                       VerticalAlignment="Center"/>
+            <TextBlock Text="узел дека" Style="{StaticResource LegendText}"/>
+
+            <Canvas Width="24" Height="12" VerticalAlignment="Center">
+                <Line X1="0" Y1="6" X2="24" Y2="6"
+                      Stroke="{StaticResource LinkBrush}" StrokeThickness="2"/>
+            </Canvas>
+            <TextBlock Text="связь next / prev" Style="{StaticResource LegendText}"/>
+
+            <Ellipse Width="12" Height="12"
+                     Fill="{StaticResource HeadBrush}" VerticalAlignment="Center"/>
+            <TextBlock Text="head" Style="{StaticResource LegendText}"/>
+
+            <Ellipse Width="12" Height="12"
+                     Fill="{StaticResource TailBrush}" VerticalAlignment="Center"/>
+            <TextBlock Text="tail" Style="{StaticResource LegendText}"/>
+        </StackPanel>
+
+        <GridSplitter Grid.Row="4" Height="4"
                       HorizontalAlignment="Stretch" VerticalAlignment="Center"
                       ShowsPreview="False"/>
 
-        <ScrollViewer x:Name="scrollLog" Grid.Row="4" Margin="5"
+        <ScrollViewer x:Name="scrollLog" Grid.Row="5" Margin="5"
                       VerticalScrollBarVisibility="Auto">
             <ItemsControl x:Name="listLog"/>
         </ScrollViewer>
 
-        <Grid Grid.Row="5" Margin="5,2">
+        <Grid Grid.Row="6" Margin="5,2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" x:Name="txtCount" Text="Элементов: 0"/>
-            <TextBlock Grid.Column="1" x:Name="txtPointers" Text="HEAD: —   TAIL: —"/>
+            <TextBlock Grid.Column="0" x:Name="txtCount"
+                       Style="{StaticResource StatusText}" Text="Элементов: 0"/>
+            <TextBlock Grid.Column="1" x:Name="txtPointers"
+                       Style="{StaticResource StatusText}" Text="HEAD: —   TAIL: —"/>
         </Grid>
     </Grid>
 </Window>
