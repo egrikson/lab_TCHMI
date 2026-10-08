@@ -2,10 +2,6 @@ using Microsoft.Extensions.Logging;
 
 namespace DequeVisualizationWpf.Logging
 {
-    /// <summary>
-    /// Логгер, выводящий записи в область «Журнал событий» главного окна.
-    /// Формат записи совпадает с <see cref="FileLogger"/>.
-    /// </summary>
     public class UiLogger : ILogger
     {
         private readonly string _category;

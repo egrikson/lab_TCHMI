@@ -5,16 +5,11 @@ using System.Windows.Shapes;
 
 namespace DequeVisualizationWpf.Drawnings;
 
-/// <summary>
-/// Рисует связи next и prev между соседними узлами дека.
-/// В WinForms-версии этим занимался обработчик panelDeque.Paint;
-/// в WPF связи — такие же объекты дерева элементов, как и узлы.
-/// </summary>
 public class ArrowRenderer
 {
-    private const double Offset = 5;      // расстояние между линиями next и prev
-    private const double HeadSize = 7;    // размер наконечника стрелки
-    private const double Detour = 15;     // отступ обхода при переносе на новую строку
+    private const double Offset = 5;
+    private const double HeadSize = 7;
+    private const double Detour = 15;
 
     public void DrawLink(Canvas canvas, Rect from, Rect to, bool wrapped)
     {
@@ -24,24 +19,17 @@ public class ArrowRenderer
             DrawStraightLink(canvas, from, to);
     }
 
-    /// <summary>Соседние узлы в одной строке: две линии со стрелками в разные стороны.</summary>
     private static void DrawStraightLink(Canvas canvas, Rect from, Rect to)
     {
         double y = from.Y + from.Height / 2;
 
-        // next: от текущего узла к следующему
         AddLine(canvas, new Point(from.Right, y - Offset), new Point(to.Left, y - Offset));
         AddHead(canvas, new Point(to.Left, y - Offset), new Vector(1, 0));
 
-        // prev: от следующего узла к текущему
         AddLine(canvas, new Point(from.Right, y + Offset), new Point(to.Left, y + Offset));
         AddHead(canvas, new Point(from.Right, y + Offset), new Vector(-1, 0));
     }
 
-    /// <summary>
-    /// Узлы оказались в разных строках: связь обходит промежуток между строками
-    /// ломаной линией со стрелками на обоих концах.
-    /// </summary>
     private static void DrawWrappedLink(Canvas canvas, Rect from, Rect to)
     {
         double y1 = from.Y + from.Height / 2;

@@ -7,9 +7,6 @@ using System.Windows.Controls;
 
 namespace DequeVisualizationWpf;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : Window
 {
     private const double StartX = 20;
@@ -108,10 +105,6 @@ public partial class MainWindow : Window
         DrawDeque();
     }
 
-    /// <summary>
-    /// Перерисовка дека: узлы позиционируются на Canvas прикреплёнными
-    /// свойствами Canvas.Left и Canvas.Top, связи рисуются между соседями.
-    /// </summary>
     private void DrawDeque()
     {
         canvasDeque.Children.Clear();
@@ -172,8 +165,6 @@ public partial class MainWindow : Window
         if (!lastNode.IsEmpty)
             headTailRenderer.DrawTail(canvasDeque, lastNode);
 
-        // Canvas не подстраивает размер под содержимое — задаём его явно,
-        // иначе ScrollViewer не узнает, что прокручивать
         canvasDeque.Width = Math.Max(maxX + StartX, wrapWidth);
         canvasDeque.Height = Math.Max(maxY + StartY, canvasDeque.MinHeight);
 
@@ -189,7 +180,6 @@ public partial class MainWindow : Window
             : $"HEAD: {_settings.Deque.First!.Value}   TAIL: {_settings.Deque.Last!.Value}";
     }
 
-    /// <summary>При изменении ширины окна связи перестраиваются заново.</summary>
     private void scrollDeque_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         if (Math.Abs(e.NewSize.Width - _lastWidth) < 1)

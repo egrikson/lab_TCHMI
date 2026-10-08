@@ -32,10 +32,6 @@ namespace DequeVisualizationWpf.Logging
             }
         }
 
-        /// <summary>
-        /// Формат записи по п. 3.4 пояснительной записки:
-        /// дата и время, уровень, категория, текст сообщения.
-        /// </summary>
         public static string Format<TState>(LogLevel logLevel, string category, TState state,
             Exception? exception, Func<TState, Exception?, string> formatter)
         {

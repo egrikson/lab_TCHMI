@@ -2,7 +2,6 @@ using System.Windows;
 
 namespace DequeVisualizationWpf.Drawnings;
 
-/// <summary>Расчёт позиций узлов с переносом на новую строку.</summary>
 public class LayoutEngine
 {
     public const double RowHeight = 100;

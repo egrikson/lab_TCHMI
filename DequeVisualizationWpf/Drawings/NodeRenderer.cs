@@ -4,10 +4,6 @@ using System.Windows.Media;
 
 namespace DequeVisualizationWpf.Drawnings;
 
-/// <summary>
-/// Создаёт визуальный узел дека: блок из двух секций —
-/// значение элемента и область указателей.
-/// </summary>
 public class NodeRenderer
 {
     public const double NodeWidth = 80;
