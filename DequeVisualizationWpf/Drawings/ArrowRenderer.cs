@@ -38,7 +38,7 @@ public class ArrowRenderer
 
         var polyline = new Polyline
         {
-            Stroke = Brushes.Black,
+            Stroke = (Brush)Application.Current.FindResource("LinkBrush"),
             StrokeThickness = 2,
             Points = new PointCollection
             {
@@ -65,7 +65,7 @@ public class ArrowRenderer
             Y1 = from.Y,
             X2 = to.X,
             Y2 = to.Y,
-            Stroke = Brushes.Black,
+            Stroke = (Brush)Application.Current.FindResource("LinkBrush"),
             StrokeThickness = 2
         });
     }
@@ -79,7 +79,7 @@ public class ArrowRenderer
 
         canvas.Children.Add(new Polygon
         {
-            Fill = Brushes.Black,
+            Fill = (Brush)Application.Current.FindResource("LinkBrush"),
             Points = new PointCollection
             {
                 tip,

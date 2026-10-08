@@ -29,14 +29,14 @@ public class NodeRenderer
 
         var pointerBox = new Border
         {
-            BorderBrush = Brushes.Black,
+            BorderBrush = (Brush)Application.Current.FindResource("NodeBorderBrush"),
             BorderThickness = new Thickness(1, 0, 0, 0),
             Child = new TextBlock
             {
                 Text = "•",
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                Foreground = Brushes.DimGray
+                Foreground = (Brush)Application.Current.FindResource("TailBrush")
             }
         };
         Grid.SetColumn(pointerBox, 1);
@@ -48,8 +48,8 @@ public class NodeRenderer
         {
             Width = NodeWidth,
             Height = NodeHeight,
-            Background = Brushes.White,
-            BorderBrush = Brushes.Black,
+            Background = (Brush)Application.Current.FindResource("NodeBrush"),
+            BorderBrush = (Brush)Application.Current.FindResource("NodeBorderBrush"),
             BorderThickness = new Thickness(1),
             Child = grid
         };

@@ -1,3 +1,4 @@
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -7,8 +8,8 @@ public class AnimationEngine
 {
     public async Task AnimateAppearance(Border node)
     {
-        node.Background = Brushes.LightGreen;
+        node.Background = (Brush)Application.Current.FindResource("NodeHighlightBrush");
         await Task.Delay(50);
-        node.Background = Brushes.LightYellow;
+        node.Background = (Brush)Application.Current.FindResource("NodeAddedBrush");
     }
 }

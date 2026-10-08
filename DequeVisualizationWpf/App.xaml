@@ -1,9 +1,23 @@
-﻿<Application x:Class="DequeVisualizationWpf.App"
+<Application x:Class="DequeVisualizationWpf.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:DequeVisualizationWpf"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <SolidColorBrush x:Key="CanvasBrush" Color="WhiteSmoke"/>
+        <SolidColorBrush x:Key="NodeBrush" Color="White"/>
+        <SolidColorBrush x:Key="NodeAddedBrush" Color="LightYellow"/>
+        <SolidColorBrush x:Key="NodeHighlightBrush" Color="LightGreen"/>
+        <SolidColorBrush x:Key="NodeBorderBrush" Color="Black"/>
+        <SolidColorBrush x:Key="LinkBrush" Color="Black"/>
+        <SolidColorBrush x:Key="HeadBrush" Color="Red"/>
+        <SolidColorBrush x:Key="TailBrush" Color="Gray"/>
+
+        <sys:Double x:Key="InputWidth">80</sys:Double>
+        <Thickness x:Key="ElementMargin">3</Thickness>
+        <Thickness x:Key="ButtonPadding">8,4</Thickness>
+
     </Application.Resources>
 </Application>

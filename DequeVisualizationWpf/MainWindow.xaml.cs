@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace DequeVisualizationWpf;
 
@@ -28,6 +29,8 @@ public partial class MainWindow : Window
 
     public MainWindow()
     {
+        _settings = new DequeAlgorithmSettings();
+
         InitializeComponent();
 
         listLog.ItemsSource = _log;
@@ -40,12 +43,11 @@ public partial class MainWindow : Window
 
         _logger = loggerFactory.CreateLogger<MainWindow>();
 
-        _settings = new DequeAlgorithmSettings();
         _algorithm = new DequeAlgorithm(loggerFactory.CreateLogger<DequeAlgorithm>());
         _algorithm.Run(_settings);
     }
 
-    private void btnAddFront_Click(object sender, RoutedEventArgs e)
+    private void AddFirstExecuted(object sender, ExecutedRoutedEventArgs e)
     {
         if (int.TryParse(txtInput.Text, out int value))
         {
@@ -59,7 +61,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private void btnAddBack_Click(object sender, RoutedEventArgs e)
+    private void AddLastExecuted(object sender, ExecutedRoutedEventArgs e)
     {
         if (int.TryParse(txtInput.Text, out int value))
         {
@@ -73,36 +75,59 @@ public partial class MainWindow : Window
         }
     }
 
-    private void btnRemoveFront_Click(object sender, RoutedEventArgs e)
+    private void RemoveFirstExecuted(object sender, ExecutedRoutedEventArgs e)
     {
-        if (_settings.Deque.Count > 0)
-        {
-            int removed = _settings.Deque.First!.Value;
-            _settings.Deque.RemoveFirst();
-            _logger.LogInformation($"Удалён элемент {removed} из начала дека");
-        }
-        else
-        {
-            _logger.LogWarning("Попытка удалить элемент из пустого дека (начало)");
-        }
-
+        int removed = _settings.Deque.First!.Value;
+        _settings.Deque.RemoveFirst();
+        _logger.LogInformation($"Удалён элемент {removed} из начала дека");
         DrawDeque();
     }
 
-    private void btnRemoveBack_Click(object sender, RoutedEventArgs e)
+    private void RemoveLastExecuted(object sender, ExecutedRoutedEventArgs e)
     {
-        if (_settings.Deque.Count > 0)
-        {
-            int removed = _settings.Deque.Last!.Value;
-            _settings.Deque.RemoveLast();
-            _logger.LogInformation($"Удалён элемент {removed} из конца дека");
-        }
-        else
-        {
-            _logger.LogWarning("Попытка удалить элемент из пустого дека (конец)");
-        }
-
+        int removed = _settings.Deque.Last!.Value;
+        _settings.Deque.RemoveLast();
+        _logger.LogInformation($"Удалён элемент {removed} из конца дека");
         DrawDeque();
+    }
+
+    private void RemoveCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = _settings.Deque.Count > 0;
+    }
+
+    private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        var dlg = new Microsoft.Win32.SaveFileDialog
+        {
+            Filter = "Text files (*.txt)|*.txt"
+        };
+
+        if (dlg.ShowDialog() == true)
+        {
+            _algorithm.SaveToFile(dlg.FileName);
+            _logger.LogInformation($"Дек сохранён в файл {dlg.FileName}");
+        }
+    }
+
+    private void OpenExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        var dlg = new Microsoft.Win32.OpenFileDialog
+        {
+            Filter = "Text files (*.txt)|*.txt"
+        };
+
+        if (dlg.ShowDialog() == true)
+        {
+            _algorithm.LoadFromFile(dlg.FileName);
+            _logger.LogInformation($"Дек загружен из файла {dlg.FileName}");
+            DrawDeque();
+        }
+    }
+
+    private void DescriptionExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        MessageBox.Show(_settings.Description, "Описание алгоритма");
     }
 
     private void DrawDeque()
@@ -202,39 +227,5 @@ public partial class MainWindow : Window
             _log.RemoveAt(0);
 
         scrollLog.ScrollToEnd();
-    }
-
-    private void menuSave_Click(object sender, RoutedEventArgs e)
-    {
-        var dlg = new Microsoft.Win32.SaveFileDialog
-        {
-            Filter = "Text files (*.txt)|*.txt"
-        };
-
-        if (dlg.ShowDialog() == true)
-        {
-            _algorithm.SaveToFile(dlg.FileName);
-            _logger.LogInformation($"Дек сохранён в файл {dlg.FileName}");
-        }
-    }
-
-    private void menuLoad_Click(object sender, RoutedEventArgs e)
-    {
-        var dlg = new Microsoft.Win32.OpenFileDialog
-        {
-            Filter = "Text files (*.txt)|*.txt"
-        };
-
-        if (dlg.ShowDialog() == true)
-        {
-            _algorithm.LoadFromFile(dlg.FileName);
-            _logger.LogInformation($"Дек загружен из файла {dlg.FileName}");
-            DrawDeque();
-        }
-    }
-
-    private void menuDescription_Click(object sender, RoutedEventArgs e)
-    {
-        MessageBox.Show(_settings.Description, "Описание алгоритма");
     }
 }

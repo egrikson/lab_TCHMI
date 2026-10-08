@@ -8,6 +8,21 @@
         Title="Визуализация дека (двусвязный список)"
         Height="600" Width="1000" MinHeight="400" MinWidth="700">
 
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:DequeCommands.AddFirst}"
+                        Executed="AddFirstExecuted"/>
+        <CommandBinding Command="{x:Static local:DequeCommands.AddLast}"
+                        Executed="AddLastExecuted"/>
+        <CommandBinding Command="{x:Static local:DequeCommands.RemoveFirst}"
+                        Executed="RemoveFirstExecuted" CanExecute="RemoveCanExecute"/>
+        <CommandBinding Command="{x:Static local:DequeCommands.RemoveLast}"
+                        Executed="RemoveLastExecuted" CanExecute="RemoveCanExecute"/>
+        <CommandBinding Command="{x:Static local:DequeCommands.Description}"
+                        Executed="DescriptionExecuted"/>
+        <CommandBinding Command="Save" Executed="SaveExecuted"/>
+        <CommandBinding Command="Open" Executed="OpenExecuted"/>
+    </Window.CommandBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,25 +35,39 @@
 
         <Menu Grid.Row="0">
             <MenuItem Header="Файл">
-                <MenuItem Header="Сохранить..." Click="menuSave_Click"/>
-                <MenuItem Header="Загрузить..." Click="menuLoad_Click"/>
+                <MenuItem Header="Сохранить..." Command="Save"/>
+                <MenuItem Header="Загрузить..." Command="Open"/>
             </MenuItem>
             <MenuItem Header="Алгоритм">
-                <MenuItem Header="Описание" Click="menuDescription_Click"/>
+                <MenuItem Command="{x:Static local:DequeCommands.Description}"/>
             </MenuItem>
         </Menu>
 
         <DockPanel Grid.Row="1" Margin="5" LastChildFill="True">
             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
                 <Label Content="Значение:" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtInput" Width="80" Margin="3"
+                <TextBox x:Name="txtInput"
+                         Width="{StaticResource InputWidth}"
+                         Margin="{StaticResource ElementMargin}"
                          VerticalContentAlignment="Center"/>
             </StackPanel>
             <WrapPanel>
-                <Button Margin="3" Padding="8,4" Click="btnAddFront_Click">Добавить в начало</Button>
-                <Button Margin="3" Padding="8,4" Click="btnAddBack_Click">Добавить в конец</Button>
-                <Button Margin="3" Padding="8,4" Click="btnRemoveFront_Click">Удалить из начала</Button>
-                <Button Margin="3" Padding="8,4" Click="btnRemoveBack_Click">Удалить с конца</Button>
+                <Button Margin="{StaticResource ElementMargin}"
+                        Padding="{StaticResource ButtonPadding}"
+                        Command="{x:Static local:DequeCommands.AddFirst}"
+                        Content="Добавить в начало"/>
+                <Button Margin="{StaticResource ElementMargin}"
+                        Padding="{StaticResource ButtonPadding}"
+                        Command="{x:Static local:DequeCommands.AddLast}"
+                        Content="Добавить в конец"/>
+                <Button Margin="{StaticResource ElementMargin}"
+                        Padding="{StaticResource ButtonPadding}"
+                        Command="{x:Static local:DequeCommands.RemoveFirst}"
+                        Content="Удалить из начала"/>
+                <Button Margin="{StaticResource ElementMargin}"
+                        Padding="{StaticResource ButtonPadding}"
+                        Command="{x:Static local:DequeCommands.RemoveLast}"
+                        Content="Удалить с конца"/>
             </WrapPanel>
         </DockPanel>
 
@@ -46,7 +75,8 @@
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto"
                       SizeChanged="scrollDeque_SizeChanged">
-            <Canvas x:Name="canvasDeque" Background="WhiteSmoke"
+            <Canvas x:Name="canvasDeque"
+                    Background="{StaticResource CanvasBrush}"
                     HorizontalAlignment="Left" VerticalAlignment="Top"
                     MinWidth="400" MinHeight="120"/>
         </ScrollViewer>
