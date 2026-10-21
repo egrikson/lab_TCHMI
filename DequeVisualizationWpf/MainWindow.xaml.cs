@@ -2,6 +2,7 @@ using DequeVisualizationWpf.Drawnings;
 using DequeVisualizationWpf.Logging;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
+using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -53,10 +54,12 @@ public partial class MainWindow : Window
         {
             _settings.Deque.AddFirst(value);
             _logger.LogInformation($"Добавлен элемент {value} в начало дека");
+            PlayNodeSound();
             DrawDeque();
         }
         else
         {
+            SystemSounds.Exclamation.Play();
             _logger.LogWarning("Попытка добавить некорректное значение в начало");
         }
     }
@@ -67,10 +70,12 @@ public partial class MainWindow : Window
         {
             _settings.Deque.AddLast(value);
             _logger.LogInformation($"Добавлен элемент {value} в конец дека");
+            PlayNodeSound();
             DrawDeque();
         }
         else
         {
+            SystemSounds.Exclamation.Play();
             _logger.LogWarning("Попытка добавить некорректное значение в конец");
         }
     }
@@ -106,6 +111,7 @@ public partial class MainWindow : Window
         if (dlg.ShowDialog() == true)
         {
             _algorithm.SaveToFile(dlg.FileName);
+            SystemSounds.Asterisk.Play();
             _logger.LogInformation($"Дек сохранён в файл {dlg.FileName}");
         }
     }
@@ -120,6 +126,7 @@ public partial class MainWindow : Window
         if (dlg.ShowDialog() == true)
         {
             _algorithm.LoadFromFile(dlg.FileName);
+            SystemSounds.Asterisk.Play();
             _logger.LogInformation($"Дек загружен из файла {dlg.FileName}");
             DrawDeque();
         }
@@ -128,6 +135,20 @@ public partial class MainWindow : Window
     private void DescriptionExecuted(object sender, ExecutedRoutedEventArgs e)
     {
         MessageBox.Show(_settings.Description, "Описание алгоритма");
+    }
+
+    private void PlayNodeSound()
+    {
+        if (menuSound.IsChecked != true)
+            return;
+
+        media.Position = TimeSpan.Zero;
+        media.Play();
+    }
+
+    private void media_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+    {
+        _logger.LogWarning($"Не удалось воспроизвести звук: {e.ErrorException.Message}");
     }
 
     private void DrawDeque()
