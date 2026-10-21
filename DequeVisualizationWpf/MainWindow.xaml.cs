@@ -165,7 +165,7 @@ public partial class MainWindow : Window
             Canvas.SetTop(node, y);
             canvasDeque.Children.Add(node);
 
-            _ = animationEngine.AnimateAppearance(node);
+            animationEngine.AnimateAppearance(node);
 
             var rect = new Rect(x, y, NodeRenderer.NodeWidth, NodeRenderer.NodeHeight);
 
